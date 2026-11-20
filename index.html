@@ -2768,23 +2768,27 @@
     <script>
       // ---------- Mobile menu ----------
       (function () {
-        var header = document.getElementById("siteHeader");
-        document
-          .getElementById("menuToggle")
-          .addEventListener("click", function () {
-            header.classList.toggle("menu-open");
-          });
-        document.querySelectorAll("#mainNav a").forEach(function (a) {
-          a.addEventListener("click", function () {
-            header.classList.remove("menu-open");
-            document.querySelectorAll("#mainNav a").forEach(function (x) {
-              x.classList.remove("active");
-            });
-            a.classList.add("active");
-          });
-        });
-      })();
+  var header = document.getElementById("siteHeader");
+  var menuToggle = document.getElementById("menuToggle");
 
+  if (menuToggle && header) {
+    menuToggle.addEventListener("click", function () {
+      header.classList.toggle("menu-open");
+    });
+  }
+
+  document.querySelectorAll("#mainNav a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      if (header) header.classList.remove("menu-open");
+
+      document.querySelectorAll("#mainNav a").forEach(function (x) {
+        x.classList.remove("active");
+      });
+
+      a.classList.add("active");
+    });
+  });
+})();
       // ---------- FAQ accordion ----------
       document.querySelectorAll(".acc-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
