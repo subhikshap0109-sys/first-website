@@ -2768,27 +2768,25 @@
     <script>
       // ---------- Mobile menu ----------
       (function () {
-  var header = document.getElementById("siteHeader");
-  var menuToggle = document.getElementById("menuToggle");
+        var header = document.getElementById("siteHeader");
+        var menuToggle = document.getElementById("menuToggle");
 
-  if (menuToggle && header) {
-    menuToggle.addEventListener("click", function () {
-      header.classList.toggle("menu-open");
-    });
-  }
+        if (menuToggle) {
+          menuToggle.addEventListener("click", function () {
+            header.classList.toggle("menu-open");
+          });
+        }
+        document.querySelectorAll("#mainNav a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            header.classList.remove("menu-open");
+            document.querySelectorAll("#mainNav a").forEach(function (x) {
+              x.classList.remove("active");
+            });
+            a.classList.add("active");
+          });
+        });
+      })();
 
-  document.querySelectorAll("#mainNav a").forEach(function (a) {
-    a.addEventListener("click", function () {
-      if (header) header.classList.remove("menu-open");
-
-      document.querySelectorAll("#mainNav a").forEach(function (x) {
-        x.classList.remove("active");
-      });
-
-      a.classList.add("active");
-    });
-  });
-})();
       // ---------- FAQ accordion ----------
       document.querySelectorAll(".acc-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
@@ -2821,17 +2819,17 @@
         form.reset();
 
         submitBtn.disabled = false;
-        submitBtn.textContent = originalBtnText;
+        submitBtn.removeAttribute("disabled");
         submitBtn.removeAttribute("aria-busy");
+        submitBtn.classList.remove("loading");
+        submitBtn.textContent = "LET'S BUILD MY LINKEDIN BRAND";
       }
 
       function showError() {
         statusEl.className = "status err";
         statusEl.textContent = "Something went wrong. Please try again.";
-
         submitBtn.disabled = false;
         submitBtn.textContent = originalBtnText;
-        submitBtn.classList.remove("loading");
       }
 
       submitBtn.addEventListener("click", function () {
@@ -2848,32 +2846,27 @@
 
         statusEl.className = "status";
         statusEl.textContent = "";
-
         submitBtn.disabled = true;
         submitBtn.textContent = "SENDING...";
-        submitBtn.setAttribute("aria-busy", "true");
 
         var url =
           SCRIPT_URL +
           "?" +
-          new URLSearchParams({
-            name: name,
-            email: email,
-            phone: phone,
-          });
+          new URLSearchParams({ name: name, email: email, phone: phone });
 
-fetch(url, { method: "GET", mode: "no-cors" })
-  .then(function () {
-    showSuccess();
-  })
-  .catch(function () {
-    showSuccess();
-  })
-  .finally(function () {
-    submitBtn.disabled = false;
-    submitBtn.textContent = "LET'S BUILD MY LINKEDIN BRAND";
-    submitBtn.removeAttribute("aria-busy");
-  });
+        fetch(url, { method: "GET", mode: "no-cors" })
+          .then(function () {
+            showSuccess();
+          })
+          .catch(function () {
+            showSuccess();
+          })
+          .finally(function () {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "LET'S BUILD MY LINKEDIN BRAND";
+            submitBtn.removeAttribute("aria-busy");
+          });
+      });
     </script>
 
     <!-- ============ ADMIN LOGIN MODAL ============ -->
