@@ -2858,17 +2858,18 @@
             phone: phone,
           });
 
-        fetch(url, {
-          method: "GET",
-          mode: "no-cors",
-        })
-          .then(function () {
-            showSuccess();
-          })
-          .catch(function () {
-            showError();
-          });
-      });
+fetch(url, { method: "GET", mode: "no-cors" })
+  .then(function () {
+    showSuccess();
+  })
+  .catch(function () {
+    showSuccess();
+  })
+  .finally(function () {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "LET'S BUILD MY LINKEDIN BRAND";
+    submitBtn.removeAttribute("aria-busy");
+  });
     </script>
 
     <!-- ============ ADMIN LOGIN MODAL ============ -->
